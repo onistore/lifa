@@ -18,7 +18,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
+      /* ❌ dulu: overflow: hidden; */
+      overflow-x: hidden;
+      overflow-y: auto; /* ✅ agar bisa scroll */
     }
 
     /* ===== LOGIN SECTION ===== */
@@ -258,7 +260,7 @@
   <!-- GALLERY PAGE -->
   <div id="galleryPage">
     <h1>💖 Happy Birthday Sayang 💖</h1>
-    <h1>💖 Pencet Foto Setelah Diklik💖</h1>
+    <h1>💖 Pencet Setelah Diklik 💖</h1>
     <div class="gallery">
       <div class="card" data-text="Selamat ulang tahun, cintaku! Semoga selalu bahagia 💕">
         <div class="card-inner">
@@ -281,38 +283,52 @@
         </div>
       </div>
 
-      <div class="card" data-text="Semoga hari ini seindah senyummu 😍">
+      <div class="card" data-text="Hari ini spesial karena kamu lahir ke dunia 🌹">
         <div class="card-inner">
           <div class="card-front">KLIK HERE</div>
           <div class="card-back"><img src="img4.jpg" alt=""></div>
         </div>
       </div>
 
-      <div class="card" data-text="Selamat bertambah usia, cintaku paling manis 🥰">
+      <div class="card" data-text="Matanya bikin jatuh cinta lagi 💫">
         <div class="card-inner">
           <div class="card-front">KLIK HERE</div>
           <div class="card-back"><img src="img5.jpg" alt=""></div>
         </div>
       </div>
 
-      <div class="card" data-text="Doaku selalu untukmu di setiap hembusan napas 💫">
+      <div class="card" data-text="Selamat ulang tahun, semoga cinta kita abadi 💞">
         <div class="card-inner">
           <div class="card-front">KLIK HERE</div>
           <div class="card-back"><img src="img6.jpg" alt=""></div>
         </div>
       </div>
 
-      <div class="card" data-text="Selamat ulang tahun, semoga cinta kita abadi 💞">
+      <div class="card" data-text="Moment ini sangat berharga 🕊">
         <div class="card-inner">
           <div class="card-front">KLIK HERE</div>
           <div class="card-back"><img src="img7.jpg" alt=""></div>
         </div>
       </div>
 
-      <div class="card" data-text="Hari ini spesial karena kamu lahir ke dunia 🌹">
+      <div class="card" data-text="Selamat bertambah usia, cintaku paling manis 🥰">
         <div class="card-inner">
           <div class="card-front">KLIK HERE</div>
           <div class="card-back"><img src="img8.jpg" alt=""></div>
+        </div>
+      </div>
+      
+      <div class="card" data-text="Selamat ulang tahun cintaku 💝">
+        <div class="card-inner">
+          <div class="card-front">KLIK HERE</div>
+          <div class="card-back"><img src="img9.jpg" alt=""></div>
+        </div>
+      </div>
+
+      <div class="card" data-text="Doaku selalu untukmu di setiap hembusan napas 💫">
+        <div class="card-inner">
+          <div class="card-front">KLIK HERE</div>
+          <div class="card-back"><img src="img10.jpg" alt=""></div>
         </div>
       </div>
     </div>
@@ -339,6 +355,7 @@
       if (user === "LIFA" && pass === "14102008") {
         loginPage.style.display = "none";
         galleryPage.style.display = "flex";
+        document.body.style.overflowY = "auto"; // ✅ izinkan scroll setelah login
       } else {
         errorMsg.style.display = "block";
         setTimeout(() => (errorMsg.style.display = "none"), 2000);
