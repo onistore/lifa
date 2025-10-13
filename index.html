@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday 💖</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* ===== LOGIN SECTION ===== */
+    #loginPage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 1s ease;
+    }
+
+    .login-box {
+      background: rgba(255, 255, 255, 0.25);
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      animation: slideDown 1.2s ease;
+    }
+
+    .login-box h2 {
+      color: white;
+      margin-bottom: 20px;
+      font-size: 1.8em;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px 15px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      font-size: 1em;
+      background: rgba(255, 255, 255, 0.8);
+      transition: 0.3s;
+    }
+
+    .login-box input:focus {
+      background: white;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    }
+
+    .login-box button {
+      width: 100%;
+      background: #ff4b6e;
+      color: white;
+      border: none;
+      padding: 10px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .login-box button:hover {
+      background: #ff2d5d;
+    }
+
+    .error {
+      color: #fff;
+      background: rgba(255, 0, 0, 0.4);
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    /* ===== GALLERY SECTION ===== */
+    #galleryPage {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 20px;
+      animation: fadeIn 1s ease;
+      width: 100%;
+      min-height: 100vh;
+    }
+
+    h1 {
+      color: white;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+      margin-bottom: 30px;
+      font-size: 2.3em;
+      text-align: center;
+      animation: fadeInDown 1s ease;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      width: 100%;
+      max-width: 1000px;
+      perspective: 1200px;
+      animation: fadeInUp 1.5s ease;
+    }
+
+    .card {
+      position: relative;
+      perspective: 1000px;
+      cursor: pointer;
+      z-index: 1;
+      transform-style: preserve-3d;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      padding-top: 125%;
+      transform-style: preserve-3d;
+      transition: transform 0.9s ease;
+    }
+
+    .card.flip .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front,
+    .card-back {
+      position: absolute;
+      inset: 0;
+      border-radius: 15px;
+      backface-visibility: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .card-front {
+      background: rgba(255, 255, 255, 0.25);
+      border: 2px solid white;
+      color: white;
+      font-size: 1.4em;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .card-front:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: scale(1.05);
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+      overflow: hidden;
+    }
+
+    .card-back img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease, filter 0.4s ease;
+      pointer-events: auto;
+    }
+
+    .card-back img:hover {
+      transform: scale(1.05);
+      filter: brightness(0.85);
+    }
+
+    /* POPUP */
+    .popup {
+      position: fixed;
+      inset: 0;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 999;
+    }
+
+    .popup.active {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .popup-content {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+      max-width: 300px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      animation: popupShow 0.4s ease;
+    }
+
+    .popup-content p {
+      font-size: 1.2em;
+      color: #ff4b6e;
+      margin-bottom: 15px;
+    }
+
+    .popup-content button {
+      border: none;
+      background: #ff4b6e;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .popup-content button:hover {
+      background: #ff2d5d;
+    }
+
+    /* Animations */
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+    @keyframes fadeInDown { from {opacity:0;transform:translateY(-40px);} to {opacity:1;transform:translateY(0);} }
+    @keyframes fadeInUp { from {opacity:0;transform:translateY(40px);} to {opacity:1;transform:translateY(0);} }
+    @keyframes slideDown { from {opacity:0;transform:translateY(-50px);} to {opacity:1;transform:translateY(0);} }
+    @keyframes popupShow { from {opacity:0;transform:scale(0.8);} to {opacity:1;transform:scale(1);} }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN PAGE -->
+  <div id="loginPage">
+    <div class="login-box">
+      <h2>💝 Selamat Datang 💝</h2>
+      <div class="error" id="errorMsg">Nama atau password salah!</div>
+      <input type="text" id="username" placeholder="Nama kamu">
+      <input type="password" id="password" placeholder="Password">
+      <button onclick="login()">Masuk</button>
+    </div>
+  </div>
+
+  <!-- GALLERY PAGE -->
+  <div id="galleryPage">
+    <h1>💖 Happy Birthday Sayang 💖</h1>
+    <h1>💖 Pencet Foto Setelah Diklik💖</h1>
+    <div class="gallery">
+      <div class="card" data-text="Selamat ulang tahun, cintaku! Semoga selalu bahagia 💕">
+        <div class="card-inner">
+          <div class="card-front">KLIK HERE</div>
+          <div class="card-back"><img src="img1.jpg" alt=""></div>
+        </div>
+      </div>
+
+      <div class="card" data-text="Happy birthday sayang, kamu segalanya bagiku 💖">
+        <div class="card-inner">
+          <div class="card-front">KLIK HERE</div>
+          <div class="card-back"><img src="img2.jpg" alt=""></div>
+        </div>
+      </div>
+
+      <div class="card" data-text="Cantiknya gak ada obat 💘">
+        <div class="card-inner">
+          <div class="card-front">KLIK HERE</div>
+          <div class="card-back"><img src="img3.jpg" alt=""></div>
+        </div>
+      </div>
+
+      <div class="card" data-text="Semoga hari ini seindah senyummu 😍">
+        <div class="card-inner">
+          <div class="card-front">KLIK HERE</div>
+          <div class="card-back"><img src="img4.jpg" alt=""></div>
+        </div>
+      </div>
+
+      <div class="card" data-text="Selamat bertambah usia, cintaku paling manis 🥰">
+        <div class="card-inner">
+          <div class="card-front">KLIK HERE</div>
+          <div class="card-back"><img src="img5.jpg" alt=""></div>
+        </div>
+      </div>
+
+      <div class="card" data-text="Doaku selalu untukmu di setiap hembusan napas 💫">
+        <div class="card-inner">
+          <div class="card-front">KLIK HERE</div>
+          <div class="card-back"><img src="img6.jpg" alt=""></div>
+        </div>
+      </div>
+
+      <div class="card" data-text="Selamat ulang tahun, semoga cinta kita abadi 💞">
+        <div class="card-inner">
+          <div class="card-front">KLIK HERE</div>
+          <div class="card-back"><img src="img7.jpg" alt=""></div>
+        </div>
+      </div>
+
+      <div class="card" data-text="Hari ini spesial karena kamu lahir ke dunia 🌹">
+        <div class="card-inner">
+          <div class="card-front">KLIK HERE</div>
+          <div class="card-back"><img src="img8.jpg" alt=""></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <p id="popupText"></p>
+      <button onclick="closePopup()">Tutup</button>
+    </div>
+  </div>
+
+  <script>
+    const loginPage = document.getElementById("loginPage");
+    const galleryPage = document.getElementById("galleryPage");
+    const errorMsg = document.getElementById("errorMsg");
+
+    function login() {
+      const user = document.getElementById("username").value.trim();
+      const pass = document.getElementById("password").value.trim();
+
+      // ubah ini sesuai keinginanmu
+      if (user === "LIFA" && pass === "14102008") {
+        loginPage.style.display = "none";
+        galleryPage.style.display = "flex";
+      } else {
+        errorMsg.style.display = "block";
+        setTimeout(() => (errorMsg.style.display = "none"), 2000);
+      }
+    }
+
+    const cards = document.querySelectorAll('.card');
+    const popup = document.getElementById('popup');
+    const popupText = document.getElementById('popupText');
+
+    cards.forEach(card => {
+      const inner = card.querySelector('.card-inner');
+      const img = card.querySelector('img');
+
+      inner.addEventListener('click', () => {
+        card.classList.toggle('flip');
+      });
+
+      img.addEventListener('click', (e) => {
+        e.stopPropagation();
+        popupText.textContent = card.getAttribute('data-text');
+        popup.classList.add('active');
+      });
+    });
+
+    function closePopup() {
+      popup.classList.remove('active');
+    }
+
+    popup.addEventListener('click', (e) => {
+      if (e.target === popup) closePopup();
+    });
+  </script>
+</body>
+</html>
